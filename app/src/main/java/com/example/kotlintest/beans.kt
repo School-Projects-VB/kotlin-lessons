@@ -1,5 +1,12 @@
 package com.example.kotlintest
 
+fun main() {
+    val car1 = CarBean("Seat", "Model", "grise")
+    val car2 = CarBean2("Seat", "Model", "grise")
+    println(car1)
+    println(car2)
+}
+
 data class CarBean(var marque: String, var model: String, var couleur: String)
 
 class CarBean2(marque: String, model: String, couleur: String) {
