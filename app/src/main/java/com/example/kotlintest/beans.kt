@@ -13,8 +13,9 @@ fun main() {
 
     println("Eleve : nom=${eleve.nom}, note=${eleve.note}")
 
-    PrintRandomIntBean(10)
-    PrintRandomIntBean()
+    val printRandomIntBean = PrintRandomIntBean(15)
+    println("-----------")
+    val printRandomIntBean2 = PrintRandomIntBean()
 }
 
 data class CarBean(var marque: String, var model: String, var couleur: String)
@@ -33,15 +34,16 @@ class StudentBean(val nom: String) {
     var note: Int = 0
 }
 
-class PrintRandomIntBean(private val max: Int = 100){
-    private val random: Random = Random()
+class PrintRandomIntBean(val max: Int){
+    val random: Random = Random()
     init {
-        if (max == 100) {
-            printNumbers(4)
-        } else {
-            printNumbers(3)
-        }
+        printNumbers(3)
     }
+
+    constructor() : this(100) {
+        printNumbers(1)
+    }
+
     private fun printNumbers(times: Int) {
         for (i in 1..times) {
             println(random.nextInt(max))
