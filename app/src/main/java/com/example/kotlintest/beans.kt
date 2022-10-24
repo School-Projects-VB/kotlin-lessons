@@ -24,6 +24,11 @@ fun main() {
     println(user.id)
     println(user2)
     println(user2.id)
+
+    val plane = PlaneBean("Toto")
+    println("${plane.nom} : ${plane.id}")
+    plane.nom = "bob"
+    println("${plane.nom} : ${plane.id}")
 }
 
 data class CarBean(var marque: String, var model: String, var couleur: String)
@@ -60,4 +65,15 @@ data class PrintRandomIntBean(private val max: Int){
 
 data class UserBean(val nom: String, var note: Int = 0) {
     val id: Int = nom.hashCode()
+}
+
+data class PlaneBean(val name: String) {
+    var id = name.hashCode()
+    private set
+
+    var nom = name
+    set(value) {
+       field = value
+       id = field.hashCode()
+    }
 }
