@@ -1,4 +1,4 @@
-package com.example.kotlin_test
+package com.example.kotlintest
 
 fun main() {
     println(min(0, 3, 5))
