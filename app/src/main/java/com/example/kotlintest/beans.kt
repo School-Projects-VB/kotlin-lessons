@@ -34,8 +34,8 @@ class StudentBean(val nom: String) {
     var note: Int = 0
 }
 
-class PrintRandomIntBean(val max: Int){
-    val random: Random = Random()
+class PrintRandomIntBean(private val max: Int){
+    private val random: Random = Random()
     init {
         printNumbers(3)
     }
