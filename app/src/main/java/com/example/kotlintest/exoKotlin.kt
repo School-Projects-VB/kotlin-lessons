@@ -2,9 +2,9 @@ package com.example.kotlintest
 
 fun main() {
     val car1 = CarBean("Seat", "Leon", "grise")
-    val car2 = CarBean("Seat", "Leon", "grise")
-    println(car1)
-    println(car2)
+    val car2 = CarBean2("Seat", "Leon", "grise")
+    println(car1.toString())
+    println(car2.toString())
 }
 
 // min
