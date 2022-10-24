@@ -1,12 +1,7 @@
 package com.example.kotlintest
 
 fun main() {
-    println(min(0, 3, 5))
-    println(min(3, 0, 5))
-    println(min(5, 3, 0))
-    println(pair(1))
-    println(pair(2))
-    println(myPrint("foo"))
+    println(boulangerie(3, 5, 2))
 }
 
 // min
@@ -20,3 +15,7 @@ fun myPrint(str: String): String = "#$str#"
 
 // Quel est le type de retour de myPrint ?
 // String
+
+fun boulangerie(croissants: Int, baguettes: Int, sandwichs: Int): Double {
+    return (croissants*PRIX_CROISSANT + baguettes*PRIX_BAGUETTE + sandwichs*PRIX_SANDWICH)
+}
