@@ -1,8 +1,10 @@
 package com.example.kotlintest
 
 fun main() {
-    println(boulangerie(2))
-    println(boulangerie(baguettes = 2, sandwichs = 3))
+    val car1 = CarBean("Seat", "Leon", "grise")
+    val car2 = CarBean("Seat", "Leon", "grise")
+    println(car1)
+    println(car2)
 }
 
 // min
