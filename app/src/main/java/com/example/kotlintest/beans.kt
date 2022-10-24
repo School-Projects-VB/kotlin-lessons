@@ -33,7 +33,7 @@ class StudentBean(val nom: String) {
     var note: Int = 0
 }
 
-class PrintRandomIntBean(var max: Int = 100){
+class PrintRandomIntBean(private val max: Int = 100){
     private val random: Random = Random()
     init {
         if (max == 100) {
