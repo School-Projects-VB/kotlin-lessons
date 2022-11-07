@@ -1,7 +1,7 @@
 package com.example.kotlintest
 
 fun main() {
-    println(getUppestChar("abcdefghijwlmonpqsrtvuxw"))
+    println(getWithoutStartedSpaces("   test   "))
 }
 
 // 1 - Return string without 'e' letter
@@ -78,4 +78,24 @@ fun getUppestChar(sentence: String) :Char{
         }
     }
     return result
+}
+
+// 8a - Return string without first started space
+fun getWithoutFirstStartedSpace(sentence :String) :String{
+    var result = sentence
+    if (sentence[0] == ' ') {
+        result = sentence.substring(1)
+    }
+    return result
+}
+
+// 8b - Return string without started spaces
+fun getWithoutStartedSpaces(sentence :String) :String{
+    var index = 0
+    var start = 0
+    while (sentence[index] == ' ') {
+        index ++
+        start = index
+    }
+    return sentence.substring(start)
 }
