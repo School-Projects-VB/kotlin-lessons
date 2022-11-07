@@ -1,7 +1,7 @@
 package com.example.kotlintest
 
 fun main() {
-    println(countCaps("CeCi eSt Un TeSt"))
+    println(getWithoutVowels("ceci est un test aeiouy"))
 }
 
 // 1 - Return string without 'e' letter
@@ -44,4 +44,16 @@ fun countCaps(sentence :String) :Int{
         }
     }
     return counter
+}
+
+// 5 - Return sentence without vowels
+fun getWithoutVowels(sentence :String) :String{
+    val vowels: List<Char> = listOf('a', 'e', 'i', 'o', 'u', 'y')
+    var result = ""
+    for (letter in sentence) {
+        if (letter !in vowels) {
+            result += letter
+        }
+    }
+    return result
 }
