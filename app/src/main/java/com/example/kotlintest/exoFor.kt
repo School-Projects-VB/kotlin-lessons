@@ -1,7 +1,7 @@
 package com.example.kotlintest
 
 fun main() {
-    println(getWithoutCaps("cEcI eSt Un TeSt"))
+    println(getUppestChar("abcdefghijwlmonpqsrtvuxw"))
 }
 
 // 1 - Return string without 'e' letter
@@ -29,8 +29,8 @@ fun countOfA(sentence: String) :Int {
 // 3 - Return reverse string
 fun reverseSentence(sentence :String) :String{
     var result = ""
-    for (i in sentence.length - 1 downTo 0) {
-        result += sentence[i]
+    for (index in sentence.length - 1 downTo 0) {
+        result += sentence[index]
     }
     return result
 }
@@ -64,6 +64,17 @@ fun getWithoutCaps(sentence :String) :String{
     for (letter in sentence) {
         if (letter !in 'A'..'Z') {
             result += letter
+        }
+    }
+    return result
+}
+
+// 7 - Return tallest char in string
+fun getUppestChar(sentence: String) :Char{
+    var result = 'a'
+    for (letter in sentence) {
+        if (letter > result) {
+            result = letter
         }
     }
     return result
