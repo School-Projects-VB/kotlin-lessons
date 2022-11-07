@@ -4,53 +4,11 @@ import com.google.gson.annotations.SerializedName
 import java.util.Random
 
 fun main() {
-    val car1 = CarBean("Seat", "Model", "grise")
-    val car2 = CarBean2("Seat", "Model", "grise")
-    println(car1)
-    println(car2)
-
-    val eleve = StudentBean("Jean")
-    eleve.note = 12
-
-    println("Eleve : nom=${eleve.nom}, note=${eleve.note}")
-
-    val printRandomIntBean = PrintRandomIntBean(15)
-    println("-----------")
-    val printRandomIntBean2 = PrintRandomIntBean()
-
-    val user = UserBean("toto")
-    val user2 = UserBean("toto", 12)
-
-    println(user)
-    println(user.id)
-    println(user2)
-    println(user2.id)
-
-    val plane = PlaneBean("Toto")
-    println("${plane.nom} : ${plane.id}")
-    plane.nom = "bob"
-    println("${plane.nom} : ${plane.id}")
-
-    val city = TownBean("Toulouse", "31000")
-    city.country = "toto"
-    val city2 = TownBean("Toulouse", "31000")
-    city2.country = "toto2"
-
-    val dataCity = DataTownBean("Toulouse", "31000")
-    dataCity.country = "toto"
-    val dataCity2 = DataTownBean("Toulouse", "31000")
-    dataCity2.country = "toto2"
-
-    println("city=$city") //city=TownBean@123245
-    println("dataCity=$dataCity")//dataCity=DataTownBean(city=Toulouse, cp=31000)
-
-    println("== : ${city == city2}") //== : false
-    println("equals : ${city.equals(city2)}")// equals : false
-    println("=== : ${city === city2}") //=== : false
-
-    println("data == : ${dataCity == dataCity2}") // data == : true
-    println("data equals : ${dataCity.equals(dataCity2)}")//data equals : true
-    println("data === : ${dataCity === dataCity2}") //data === : false
+    val randomName = RandomName()
+    randomName.add("Gérard")
+    repeat(10) {
+        println(randomName.next() + " ")
+    }
 }
 
 data class CarBean(var marque: String, var model: String, var couleur: String)
@@ -130,3 +88,19 @@ data class WeatherBean (
     @SerializedName("main")
     var temperature:TempBean
 )
+
+class RandomName {
+    private val random: Random = Random()
+    private var names :ArrayList<String> = arrayListOf("Benjamin", "Mathilde", "Jérémy")
+
+    fun add(name :String) {
+        if (name.isBlank() || name.contains(' ') || name in names) {
+            throw Exception("Impossible d'ajouter ce prénom")
+        } else {
+            names.add(name)
+            println("Nom ajouté")
+        }
+    }
+    
+    fun next() :String{return names[random.nextInt(names.size)]}
+}
