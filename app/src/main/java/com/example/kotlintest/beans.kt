@@ -1,5 +1,6 @@
 package com.example.kotlintest
 
+import com.google.gson.annotations.SerializedName
 import java.util.Random
 
 fun main() {
@@ -105,3 +106,27 @@ class TownBean(val city: String, val cp: String) {
 data class DataTownBean(val city: String, val cp: String) {
     var country: String? = null
 }
+
+data class CoordBean (
+    var lon :Double,
+    var lat :Double
+)
+data class WindBean (
+    var speed :Double,
+    var deg: Int
+)
+data class TempBean (
+    var temp :Double,
+    var feels_like :Double,
+    var temp_min :Double,
+    var temp_max :Double
+)
+data class WeatherBean (
+    var coord :CoordBean,
+    var visibility :Int,
+    var wind :WindBean,
+    var name :String,
+
+    @SerializedName("main")
+    var temperature:TempBean
+)
