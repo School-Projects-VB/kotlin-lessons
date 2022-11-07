@@ -1,14 +1,14 @@
 package com.example.kotlintest
 
 fun main() {
-    println(getWithoutStartedSpaces("   test   "))
+    println(getWithoutStartedSpaces2("   te st   "))
 }
 
 // 1 - Return string without 'e' letter
 fun getWithoutE(sentence :String) :String {
     var result = ""
     for (letter in sentence) {
-        if (letter != 'e') {
+        if (letter !in arrayOf('e', 'E')) {
             result += letter
         }
     }
@@ -19,7 +19,7 @@ fun getWithoutE(sentence :String) :String {
 fun countOfA(sentence: String) :Int {
     var counter = 0
     for (letter in sentence) {
-        if (letter == 'a') {
+        if (letter in arrayOf('a', 'A')) {
             counter++
         }
     }
@@ -48,7 +48,7 @@ fun countCaps(sentence :String) :Int{
 
 // 5 - Return string without vowels
 fun getWithoutVowels(sentence :String) :String{
-    val vowels: List<Char> = listOf('a', 'e', 'i', 'o', 'u', 'y')
+    val vowels = "aeiouy"
     var result = ""
     for (letter in sentence) {
         if (letter !in vowels) {
@@ -89,7 +89,7 @@ fun getWithoutFirstStartedSpace(sentence :String) :String{
     return result
 }
 
-// 8b - Return string without started spaces
+// 8b - Return string without started spaces (while)
 fun getWithoutStartedSpaces(sentence :String) :String{
     var index = 0
     var start = 0
@@ -98,4 +98,21 @@ fun getWithoutStartedSpaces(sentence :String) :String{
         start = index
     }
     return sentence.substring(start)
+}
+
+// 8c - Return string without started spaces (for)
+fun getWithoutStartedSpaces2(sentence :String) :String{
+    var start_write = false
+    var result = ""
+    for (letter in sentence) {
+        if (letter != ' ') {
+            start_write = true
+        }
+
+        if (start_write) {
+            result += letter
+        }
+    }
+    println("result : ")
+    return result
 }
