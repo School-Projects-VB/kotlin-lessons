@@ -1,7 +1,7 @@
 package com.example.kotlintest
 
 fun main() {
-    println(countOfA("mal"))
+    println(reverseSentence("ceci est un test"))
 }
 
 // Return string without 'e' letter
@@ -24,4 +24,13 @@ fun countOfA(sentence: String) :Int {
         }
     }
     return counter
+}
+
+// Return reverse string
+fun reverseSentence(sentence :String) :String{
+    var result = ""
+    for (i in sentence.length - 1 downTo 0) {
+        result += sentence[i]
+    }
+    return result
 }
