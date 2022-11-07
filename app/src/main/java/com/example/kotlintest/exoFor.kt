@@ -1,7 +1,7 @@
 package com.example.kotlintest
 
 fun main() {
-    println(getWithoutStartedSpaces2("   te st   "))
+    println(replaceBy_("   te st   "))
 }
 
 // 1 - Return string without 'e' letter
@@ -114,5 +114,14 @@ fun getWithoutStartedSpaces2(sentence :String) :String{
         }
     }
     println("result : ")
+    return result
+}
+
+// 9 - Replace spaces by underscores
+fun replaceBy_(sentence: String): String {
+    var result = ""
+    for (index in sentence.indices) {
+        result += if(sentence[index] == ' ') '_' else sentence[index]
+    }
     return result
 }
