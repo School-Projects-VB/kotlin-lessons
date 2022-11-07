@@ -1,9 +1,10 @@
 package com.example.kotlintest
 
 import android.view.WindowId.FocusObserver
+import androidx.core.provider.FontRequest
 
 fun main() {
-    println(getWithoutE("ceci est un test"))
+    println(countOfA("analphabet"))
 }
 
 // Return string without 'e' letter
@@ -17,3 +18,15 @@ fun getWithoutE(sentence :String) :String {
     }
     return result
 }
+
+// Return the count of 'a' letter
+fun countOfA(sentence: String) :Int {
+    var counter :Int = 0
+    for (i in sentence.indices) {
+        if (sentence[i] == 'a') {
+            counter++
+        }
+    }
+    return counter
+}
+
