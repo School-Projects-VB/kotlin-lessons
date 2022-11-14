@@ -1,21 +1,19 @@
-package com.example.kotlintest
+package com.example.kotlintest.exokotlin
 
+import com.example.kotlintest.WeatherBean
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-fun main() {
-    val weather = RequestUtils.loadWeather("Bordeaux")
-    println(weather)
-}
+const val URL_API_WEATHER =
+    "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=b80967f0a6bd10d23e44848547b26550&units=metric&lang=fr"
 
 object RequestUtils {
     private val client = OkHttpClient()
-    var gson = Gson()
+    private var gson = Gson()
 
     fun loadWeather(city: String): WeatherBean {
-        val url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=b80967f0a6bd10d23e44848547b26550&units=metric&lang=fr"
-        val json: String = sendGet(url)
+        val json: String = sendGet(URL_API_WEATHER.format(city))
         return gson.fromJson(json, WeatherBean::class.java)
     }
 

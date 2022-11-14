@@ -1,5 +1,7 @@
 package com.example.kotlintest
 
+import com.example.kotlintest.exokotlin.RequestUtils
+
 fun main() {
     print("Enter city: ")
     val city = readLine()!!
