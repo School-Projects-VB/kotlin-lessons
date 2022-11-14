@@ -1,5 +1,9 @@
 package com.example.kotlintest
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+
+@RequiresApi(Build.VERSION_CODES.N)
 fun main() {
     exo1()
     exo2()
@@ -13,6 +17,8 @@ inline fun compareUser(compare: (UserBean, UserBean) -> UserBean, u1: UserBean, 
     }
     return selectUser
 }
+
+fun Iterable<UserBean>.print()= println(this.joinToString("\n") { it.nom + " : " + it.note })
 
 fun exo1() {
     val Lower = { text:String -> println(text.lowercase()) }
@@ -43,6 +49,7 @@ fun exo2() {
     println(compareUser(compareUsersByName, u1, u2, u3))
 }
 
+@RequiresApi(Build.VERSION_CODES.N)
 fun exo4() {
     val users = arrayListOf(
         UserBean ("toto", 16),
@@ -50,25 +57,30 @@ fun exo4() {
         UserBean ("Charles", 14)
     )
 
-    println(users.sortedBy { it.nom })
-    println(users.filter { it.note >= 10 })
-    println(users.count { it.nom == "toto" })
-    println(users.filter { it.note >= 10 }.count { it.nom == "toto" })
+    users.sortedBy { it.nom.lowercase() }.print()
+    users.filter { it.note >= 10 }.print()
+
+    // println(users.count { it.nom.equals("Toto", true)})
+    val listToto = { it: UserBean -> it.nom.equals("Toto", true) }
+    println(users.count(listToto))
+
+    println(users.count { listToto(it) && it.note >= 10 })
 
     val average = users.map{ it.note }.average()
     println(average)
-    println(users.filter { it.note > average })
+    println(users.count { listToto(it) && it.note >= average })
 
     val list6 = users
     list6.filter { it.note < 10 }.forEach { it.note++ }
-    println(list6)
+    list6.print()
 
     val list7 = users
-    list7.filter { it.nom.equals("toto", true)}.forEach { it.note++ }
-    println(list7)
+    list7.filter(listToto).forEach { it.note++ }
+    list7.print()
 
     val list8 = users
-    println(list8.filter { it.note > list8.map { it.note }.min() })
+    val minNote = list8.minOfOrNull { it.note }
+    list8.removeIf { it.note == minNote }
 
-    println(users.filter { it.note >= 10 }.sortedBy { it.nom }.joinToString { "${it.nom}, " })
+    print(users.filter { it.note >= 10 }.map { it.nom }.sortedBy { it })
 }
