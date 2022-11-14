@@ -39,7 +39,7 @@
             android:text="@string/compl_ment" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/etName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -71,7 +71,7 @@
             android:text="@string/annuler" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btValidate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
