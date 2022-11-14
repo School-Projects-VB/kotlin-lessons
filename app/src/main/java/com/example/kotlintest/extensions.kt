@@ -5,24 +5,14 @@ fun main() {
     println(16.sqrt())
 }
 
-fun String.kids() :String {
+fun String.kids() :String{
     var result = ""
-    for (index in this.indices) {
-        if (index % 2 == 0) {
-            result += this[index].uppercaseChar()
-        } else {
-            result += this[index].lowercaseChar()
-        }
+
+    for ((index, char) in this.withIndex()) {
+        result += if (index % 2 == 0) char.uppercaseChar() else char.lowercaseChar()
     }
+
     return result
 }
 
-fun Int.sqrt() :Int {
-    var result = 0
-    for (index in 1..this / 2) {
-        if (index * index == this) {
-            result = index
-        }
-    }
-    return result
-}
+fun Number.sqrt() = kotlin.math.sqrt(this.toDouble())
