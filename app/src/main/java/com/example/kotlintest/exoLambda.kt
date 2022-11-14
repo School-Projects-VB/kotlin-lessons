@@ -16,4 +16,7 @@ fun exo1() {
 
     val Reverse: (String) -> String = { it.reversed() }
     println(Reverse("toto test"))
+
+    val minToMinHour: (Int) -> Pair<Int, Int> = { Pair(it/60, it %60) }
+    println(minToMinHour(142))
 }
