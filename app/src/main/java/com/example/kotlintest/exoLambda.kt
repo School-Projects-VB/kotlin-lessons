@@ -3,6 +3,15 @@ package com.example.kotlintest
 fun main() {
     exo1()
     exo2()
+    exo4()
+}
+
+inline fun compareUser(compare: (UserBean, UserBean) -> UserBean, u1: UserBean, vararg list: UserBean): UserBean {
+    var selectUser = u1
+    for (u in list) {
+        selectUser = compare(u, selectUser)
+    }
+    return selectUser
 }
 
 fun exo1() {
@@ -34,10 +43,32 @@ fun exo2() {
     println(compareUser(compareUsersByName, u1, u2, u3))
 }
 
-inline fun compareUser(compare: (UserBean, UserBean) -> UserBean, u1: UserBean, vararg list: UserBean): UserBean {
-    var selectUser = u1
-    for (u in list) {
-        selectUser = compare(u, selectUser)
-    }
-    return selectUser
+fun exo4() {
+    val users = arrayListOf(
+        UserBean ("toto", 16),
+        UserBean ("Bobby", 20),
+        UserBean ("Charles", 14)
+    )
+
+    println(users.sortedBy { it.nom })
+    println(users.filter { it.note >= 10 })
+    println(users.count { it.nom == "toto" })
+    println(users.filter { it.note >= 10 }.count { it.nom == "toto" })
+
+    val average = users.map{ it.note }.average()
+    println(average)
+    println(users.filter { it.note > average })
+
+    val list6 = users
+    list6.filter { it.note < 10 }.forEach { it.note++ }
+    println(list6)
+
+    val list7 = users
+    list7.filter { it.nom.equals("toto", true)}.forEach { it.note++ }
+    println(list7)
+
+    val list8 = users
+    println(list8.filter { it.note > list8.map { it.note }.min() })
+
+    println(users.filter { it.note >= 10 }.sortedBy { it.nom }.joinToString { "${it.nom}, " })
 }
