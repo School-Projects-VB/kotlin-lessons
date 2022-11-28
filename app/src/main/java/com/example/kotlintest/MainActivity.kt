@@ -62,10 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TimePickerDialog
             MENU_ID_TIME_PICKER -> TimePickerDialog(this, this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
             MENU_ID_DATE_PICKER -> DatePickerDialog(this, this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
             MENU_ID_ALERT_DIALOG -> AlertDialog.Builder(this).setTitle("Mon titre").setMessage("Afficher un toast").setPositiveButton("OK") {dialog, which -> Toast.makeText(this, "Ceci est un toast", Toast.LENGTH_SHORT).show()}.setIcon(R.mipmap.ic_launcher).show()
-            MENU_ID_METEO -> {
-                intent = Intent(this, WeatherActivity::class.java)
-                startActivity(intent)
-            }
+            MENU_ID_METEO -> { startActivity(Intent(this, WeatherActivity::class.java)) }
         }
         return super.onOptionsItemSelected(item)
     }
