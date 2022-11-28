@@ -23,14 +23,12 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     override fun onClick(view: View) {
-        val utils = RequestUtils
-
         when(view) {
             binding.btAnnuler -> {binding.text.text = getText(R.string.tv)}
             binding.btLoad -> {
                 binding.progressBar.isVisible = true
                 thread {
-                    val weather = utils.loadWeather("Bordeaux")
+                    val weather = RequestUtils.loadWeather("Bordeaux")
                     runOnUiThread {
                         binding.text.text = "Il fait ${weather.temperature.temp}° à ${weather.name} avec un vent de ${weather.wind.speed} km/h"
                         binding.progressBar.isVisible = false
