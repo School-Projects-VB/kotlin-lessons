@@ -8,21 +8,21 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/tv" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btLoad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/load" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btAnnuler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
