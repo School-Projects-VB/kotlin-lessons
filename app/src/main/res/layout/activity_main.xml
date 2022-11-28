@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <RadioGroup
+        android:id="@+id/rgAdvice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -28,11 +29,13 @@
     </RadioGroup>
 
     <LinearLayout
+        android:id="@+id/llComplement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/txComplement"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -59,6 +62,7 @@
         android:contentDescription="@string/android" />
 
     <LinearLayout
+        android:id="@+id/llActions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
