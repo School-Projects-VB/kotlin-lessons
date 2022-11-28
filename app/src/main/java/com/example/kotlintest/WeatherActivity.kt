@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.example.kotlintest.databinding.ActivityWeatherBinding
 import com.example.kotlintest.exokotlin.RequestUtils
 import kotlin.concurrent.thread
@@ -17,6 +18,7 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.btLoad.setOnClickListener(this)
         binding.btAnnuler.setOnClickListener(this)
+        binding.progressBar.isVisible = false
     }
 
     @SuppressLint("SetTextI18n")
@@ -24,16 +26,17 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         val utils = RequestUtils
 
         when(view) {
+            binding.btAnnuler -> {binding.text.text = getText(R.string.tv)}
             binding.btLoad -> {
-                binding.text.text = "Waiting..."
+                binding.progressBar.isVisible = true
                 thread {
-                    var weather = utils.loadWeather("Bordeaux")
+                    val weather = utils.loadWeather("Bordeaux")
                     runOnUiThread {
                         binding.text.text = "Il fait ${weather.temperature.temp}° à ${weather.name} avec un vent de ${weather.wind.speed} km/h"
+                        binding.progressBar.isVisible = false
                     }
                 }
             }
-            binding.btAnnuler -> {binding.text.text = getText(R.string.tv)}
         }
     }
 }
