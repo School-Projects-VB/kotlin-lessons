@@ -18,9 +18,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
+        var editText = binding.etName.hint
         when(view) {
-            binding.btValidate -> binding.etName.hint = "Validé"
-            binding.btCancel -> binding.etName.hint = "Annulé"
+            binding.btValidate -> editText = "Validé"
+            binding.btCancel -> editText = "Annulé"
         }
     }
 }
