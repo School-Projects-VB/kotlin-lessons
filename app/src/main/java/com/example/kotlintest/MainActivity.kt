@@ -35,9 +35,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menu.add(0, 1, 0, "foo")
-        menu.add(0, 2, 0, "bar")
-        menu.add(0, 3, 0, "baz")
+        menu.add(0, 1, 0, "TimePicker")
+        menu.add(0, 2, 0, "DatePicker")
+        menu.add(0, 3, 0, "AlertDialog")
 
         return super.onCreateOptionsMenu(menu)
     }
