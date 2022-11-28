@@ -7,4 +7,5 @@
     <string name="android">Android</string>
     <string name="annuler">Cancel</string>
     <string name="ajouter">Add</string>
+    <string name="tv">TextView</string>
 </resources>
