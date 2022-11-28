@@ -18,10 +18,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
-        var editText = binding.etName.hint
+        val editText = binding.etName
+        val radioButtons = arrayOf(binding.rbLike, binding.rbDislike)
+        var text: CharSequence = editText.text
+
+        for (rb in radioButtons) {
+            if (rb.isChecked) {
+                text = rb.text
+            }
+        }
+
         when(view) {
-            binding.btValidate -> editText = "Validé"
-            binding.btCancel -> editText = "Annulé"
+            binding.btValidate -> editText.hint = text
+            binding.btCancel -> {
+                editText.hint = getString(R.string.saisir_nom_ici)
+                binding.rgAdvice.clearCheck()
+            }
         }
     }
 }
