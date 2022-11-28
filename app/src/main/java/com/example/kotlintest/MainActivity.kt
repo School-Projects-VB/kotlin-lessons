@@ -1,5 +1,6 @@
 package com.example.kotlintest
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -17,23 +18,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.btCancel.setOnClickListener(this)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onClick(view: View) {
-        val editText = binding.etName
-        val radioButtons = arrayOf(binding.rbLike, binding.rbDislike)
-        var text: CharSequence = editText.text
-
-        for (rb in radioButtons) {
-            if (rb.isChecked) {
-                text = rb.text
-            }
-        }
+        val imageView = binding.ivAndroid
 
         when(view) {
-            binding.btValidate -> editText.hint = text
-            binding.btCancel -> {
-                editText.hint = getString(R.string.saisir_nom_ici)
-                binding.rgAdvice.clearCheck()
-            }
+            binding.btValidate -> {imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_flag_24))}
+            binding.btCancel -> {imageView.setImageDrawable(getDrawable(R.drawable.ic_baseline_delete_forever_24))}
         }
     }
 }
