@@ -28,9 +28,10 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
             binding.btLoad -> {
                 binding.progressBar.isVisible = true
                 thread {
-                    val weather = RequestUtils.loadWeather("Bordeaux")
+                    val city = "Toulouse"
+                    val weather = RequestUtils.loadWeather(city)
                     runOnUiThread {
-                        binding.text.text = "Il fait ${weather.temperature.temp}° à ${weather.name} avec un vent de ${weather.wind.speed} km/h"
+                        binding.text.text = "Il fait ${weather.temperature.temp}° à ${weather.name} avec un vent de ${weather.wind.speed}km/h"
                         binding.progressBar.isVisible = false
                     }
                 }
