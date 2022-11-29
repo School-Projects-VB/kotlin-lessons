@@ -11,4 +11,5 @@
     <string name="tv">Météo</string>
     <string name="load">Charger</string>
     <string name="loading">---------</string>
+    <string name="errorNotFound">[ERREUR] La ville n\'a pas été trouvée</string>
 </resources>

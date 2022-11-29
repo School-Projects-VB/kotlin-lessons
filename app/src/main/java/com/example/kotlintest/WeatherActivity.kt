@@ -49,17 +49,18 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
             binding.btLoad -> {
                 binding.progressBar.isVisible = true
                 thread {
-                    val city = "Bordeaux"
+                    val city = "gdsvdsv"
                     var weather :WeatherBean? = null
                     try {
                         weather = RequestUtils.loadWeather(city)
                     } catch (e :java.lang.Exception) {
-                        println("[ERROR] Found : $e")
+                        println(getText(R.string.errorNotFound))
+                        e.printStackTrace()
                     }
                     runOnUiThread {
                         if(weather == null) {
                             binding.tvError.isVisible = true
-                            binding.tvError.text = "Une erreur est survenue"
+                            binding.tvError.setText(R.string.errorNotFound)
                         } else {
                             val icon = weather.data[0].icon
                             val url = "https://openweathermap.org/img/wn/%s.png"
