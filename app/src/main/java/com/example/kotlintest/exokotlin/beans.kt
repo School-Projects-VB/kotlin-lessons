@@ -81,7 +81,8 @@ data class TempBean (
 )
 data class WeatherDetailsBean (
     var main :String,
-    var description :String
+    var description :String,
+    var icon: String
 )
 data class WeatherBean (
     var coord :CoordBean,

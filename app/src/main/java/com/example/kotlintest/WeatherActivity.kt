@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import com.example.kotlintest.databinding.ActivityWeatherBinding
 import com.example.kotlintest.exokotlin.RequestUtils
+import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -19,12 +20,11 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        clear()
         binding.btLoad.setOnClickListener(this)
         binding.ivClear.setOnClickListener(this)
         binding.ivFire.setColorFilter(Color.RED)
         binding.ivFlag.setColorFilter(Color.BLUE)
-        binding.progressBar.isVisible = false
-        binding.tvError.isVisible = false
     }
 
     @SuppressLint("SetTextI18n")
@@ -36,8 +36,11 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
                     binding.tvCity,
                     binding.tvTemp,
                     binding.tvDetails,
-                    binding.tvWind
+                    binding.tvWind,
+                    binding.tvState
                 )
+
+                clear()
 
                 for (tv in textViewsToClear) {
                     tv.setText(R.string.loading)
@@ -46,7 +49,7 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
             binding.btLoad -> {
                 binding.progressBar.isVisible = true
                 thread {
-                    val city = "Toulouse"
+                    val city = "Bordeaux"
                     var weather :WeatherBean? = null
                     try {
                         weather = RequestUtils.loadWeather(city)
@@ -58,16 +61,39 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
                             binding.tvError.isVisible = true
                             binding.tvError.text = "Une erreur est survenue"
                         } else {
+                            val icon = weather.data[0].icon
+                            val url = "https://openweathermap.org/img/wn/%s.png"
+
                             binding.tvCity.text = weather.name
                             binding.tvState.text = weather.data[0].description.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                             binding.tvTemp.text = "${weather.temperature.temp}°"
                             binding.tvDetails.text = "( ${weather.temperature.temp_min}° / ${weather.temperature.temp_max}° )"
                             binding.tvWind.text = "${weather.wind.speed}"
+
+                            thread {
+                                val picasso = Picasso.get().load(url.format(icon))
+                                runOnUiThread {
+                                    binding.ivWeather.isVisible = true
+                                    picasso.into(binding.ivWeather)
+                                }
+                            }
                         }
                         binding.progressBar.isVisible = false
                     }
                 }
             }
+        }
+    }
+
+    private fun clear() {
+        val elementsToClear = arrayListOf(
+            binding.progressBar,
+            binding.tvError,
+            binding.ivWeather
+        )
+
+        for (element in elementsToClear) {
+            element.isVisible = false
         }
     }
 }
