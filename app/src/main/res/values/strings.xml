@@ -9,4 +9,5 @@
     <string name="ajouter">Add</string>
     <string name="tv">TextView</string>
     <string name="load">Load</string>
+    <string name="loading" >---------</string>
 </resources>

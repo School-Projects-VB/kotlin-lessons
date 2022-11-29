@@ -1,6 +1,7 @@
 package com.example.kotlintest
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -17,21 +18,20 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         binding.btLoad.setOnClickListener(this)
-        binding.btAnnuler.setOnClickListener(this)
+        binding.ivFire.setColorFilter(Color.RED)
+        binding.ivFlag.setColorFilter(Color.BLUE)
         binding.progressBar.isVisible = false
     }
 
     @SuppressLint("SetTextI18n")
     override fun onClick(view: View) {
         when(view) {
-            binding.btAnnuler -> {binding.text.text = getText(R.string.tv)}
             binding.btLoad -> {
                 binding.progressBar.isVisible = true
                 thread {
                     val city = "Toulouse"
                     val weather = RequestUtils.loadWeather(city)
                     runOnUiThread {
-                        binding.text.text = "Il fait ${weather.temperature.temp}° à ${weather.name} avec un vent de ${weather.wind.speed}km/h"
                         binding.progressBar.isVisible = false
                     }
                 }
