@@ -59,7 +59,7 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
                             binding.tvError.text = "Une erreur est survenue"
                         } else {
                             binding.tvCity.text = weather.name
-                            binding.tvState.text = weather.data[0].description.replaceFirstChar {if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                            binding.tvState.text = weather.data[0].description.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                             binding.tvTemp.text = "${weather.temperature.temp}°"
                             binding.tvDetails.text = "( ${weather.temperature.temp_min}° / ${weather.temperature.temp_max}° )"
                             binding.tvWind.text = "${weather.wind.speed}"
