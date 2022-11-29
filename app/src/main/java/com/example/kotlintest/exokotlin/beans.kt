@@ -79,6 +79,10 @@ data class TempBean (
     var temp_min :Double,
     var temp_max :Double
 )
+data class WeatherDetailsBean (
+    var main :String,
+    var description :String
+)
 data class WeatherBean (
     var coord :CoordBean,
     var visibility :Int,
@@ -86,7 +90,10 @@ data class WeatherBean (
     var name :String,
 
     @SerializedName("main")
-    var temperature:TempBean
+    var temperature :TempBean,
+
+    @SerializedName("weather")
+    var data :List<WeatherDetailsBean>
 )
 
 class RandomName {
