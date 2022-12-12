@@ -1,19 +1,24 @@
 package com.example.kotlintest
 
 import android.text.Editable
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kotlintest.exokotlin.RequestUtils
 
 
-class WeatherViewModel(var weather: WeatherBean? = null, var errorMessage: String? = null) :
+class WeatherViewModel() :
     ViewModel() {
+
+    val weather = MutableLiveData<WeatherBean?>()
+    val errorMessage = MutableLiveData<String?>()
+
     fun loadData(city: Editable) {
-        weather = null
-        errorMessage = null
         try {
-            weather = RequestUtils.loadWeather(city)
+            val data = RequestUtils.loadWeather(city)
+            weather.postValue(data)
         } catch (e: java.lang.Exception) {
-            errorMessage = "[ERROR] ${e.message}"
+            val data = "[ERROR] ${e.message}"
+            errorMessage.postValue(data)
             e.printStackTrace()
         }
     }

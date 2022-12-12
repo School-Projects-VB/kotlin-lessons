@@ -18,6 +18,7 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityWeatherBinding.inflate(layoutInflater) }
     private val model by lazy { ViewModelProvider(this)[WeatherViewModel::class.java] }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -28,8 +29,38 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         binding.ivFlag.setColorFilter(Color.BLUE)
 
         disableAll()
-        if (model.weather != null || model.errorMessage != null) {
-            refreshScreen()
+
+        model.errorMessage.observe(this) {
+            disableAll()
+            binding.tvError.isVisible = true
+            binding.tvError.setText(R.string.errorNotFound)
+        }
+
+        model.weather.observe(this) { weather ->
+            binding.tvError.isVisible = false
+
+            binding.tvCity.text = weather?.name
+            binding.tvState.text = weather?.data?.get(0)?.description?.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+            }
+            binding.tvTemp.text = "${weather?.temperature?.temp}°"
+            binding.tvDetails.text =
+                "( ${weather?.temperature?.temp_min}° / ${weather?.temperature?.temp_max}° )"
+            binding.tvWind.text = "${weather?.wind?.speed} km/h"
+
+            enable(binding.tvCity)
+            enable(binding.tvState)
+            enable(binding.tvTemp)
+            enable(binding.tvDetails)
+            enable(binding.tvWind)
+
+            binding.ivClear.isVisible = true
+            binding.ivFire.isVisible = true
+            binding.ivFlag.isVisible = true
+            binding.ivWeather.isVisible = true
+
+            println("https://openweathermap.org/img/wn/%s.png".format(weather?.data?.get(0)?.icon))
+            Picasso.get().load("https://openweathermap.org/img/wn/%s.png".format(weather?.data?.get(0)?.icon)).into(binding.ivWeather)
         }
     }
 
@@ -44,47 +75,10 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
                 thread {
                     model.loadData(binding.etCity.text)
                     runOnUiThread {
-                        refreshScreen()
                         binding.progressBar.isVisible = false
                     }
                 }
             }
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun refreshScreen() {
-        if (model.errorMessage != null && model.errorMessage!!.isNotBlank()) {
-            disableAll()
-            binding.tvError.isVisible = true
-            binding.tvError.setText(R.string.errorNotFound)
-        } else {
-            binding.tvError.isVisible = false
-        }
-
-        if (model.weather != null && !model.weather?.data.isNullOrEmpty()) {
-            val weather: WeatherBean = model.weather!!
-
-            binding.tvCity.text = weather.name
-            binding.tvState.text = weather.data[0].description.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-            }
-            binding.tvTemp.text = "${weather.temperature.temp}°"
-            binding.tvDetails.text =
-                "( ${weather.temperature.temp_min}° / ${weather.temperature.temp_max}° )"
-            binding.tvWind.text = "${weather.wind.speed}"
-
-            enable(binding.tvCity)
-            enable(binding.tvState)
-            enable(binding.tvTemp)
-            enable(binding.tvDetails)
-            enable(binding.tvWind)
-
-            binding.ivClear.isVisible = true
-            binding.ivFire.isVisible = true
-            binding.ivFlag.isVisible = true
-
-            Picasso.get().load("https://openweathermap.org/img/wn/%s.png".format(weather.data[0].icon)).into(binding.ivWeather)
         }
     }
 
