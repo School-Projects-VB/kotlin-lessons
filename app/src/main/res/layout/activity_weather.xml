@@ -12,7 +12,8 @@
     <ImageView
         android:id="@+id/ivWeather"
         android:layout_width="70dp"
-        android:layout_height="70dp" />
+        android:layout_height="70dp"
+        android:contentDescription="@string/weather_description" />
 
     <TextView
         android:id="@+id/tvCity"
@@ -26,7 +27,8 @@
         android:id="@+id/ivClear"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:srcCompat="@drawable/ic_baseline_delete_forever_24" />
+        app:srcCompat="@drawable/ic_baseline_delete_forever_24"
+        android:contentDescription="@string/clear_description" />
 
     <TextView
         android:id="@+id/tvState"
@@ -48,7 +50,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:filterTouchesWhenObscured="false"
-            app:srcCompat="@drawable/ic_baseline_whatshot_24" />
+            app:srcCompat="@drawable/ic_baseline_whatshot_24"
+            android:contentDescription="@string/fire_description" />
 
         <TextView
             android:id="@+id/tvTemp"
@@ -83,7 +86,8 @@
             android:layout_height="17dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_baseline_flag_24" />
+            app:srcCompat="@drawable/ic_baseline_flag_24"
+            android:contentDescription="@string/flag_description" />
 
         <TextView
             android:id="@+id/tvWind"
@@ -109,6 +113,15 @@
         android:text="@string/loading"
         android:textColor="@android:color/holo_red_dark"
         android:textStyle="italic" />
+
+    <EditText
+        android:id="@+id/etCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/city"
+        android:autofillHints="@string/city" />
 
     <Button
         android:id="@+id/btLoad"

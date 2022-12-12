@@ -1,5 +1,6 @@
 package com.example.kotlintest.exokotlin
 
+import android.text.Editable
 import com.example.kotlintest.WeatherBean
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -12,7 +13,7 @@ object RequestUtils {
     private val client = OkHttpClient()
     private var gson = Gson()
 
-    fun loadWeather(city: String): WeatherBean {
+    fun loadWeather(city: Editable): WeatherBean {
         val json: String = sendGet(URL_API_WEATHER.format(city))
         return gson.fromJson(json, WeatherBean::class.java)
     }

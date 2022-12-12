@@ -20,7 +20,7 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        clear()
+        disableAll()
         binding.btLoad.setOnClickListener(this)
         binding.ivClear.setOnClickListener(this)
         binding.ivFire.setColorFilter(Color.RED)
@@ -31,25 +31,13 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when(view) {
             binding.ivClear -> {
-                val textViewsToClear = arrayListOf<TextView>(
-                    binding.tvError,
-                    binding.tvCity,
-                    binding.tvTemp,
-                    binding.tvDetails,
-                    binding.tvWind,
-                    binding.tvState
-                )
-
-                clear()
-
-                for (tv in textViewsToClear) {
-                    tv.setText(R.string.loading)
-                }
+                disableAll()
+                binding.etCity.setText("")
             }
             binding.btLoad -> {
                 binding.progressBar.isVisible = true
                 thread {
-                    val city = "gdsvdsv"
+                    val city = binding.etCity.text
                     var weather :WeatherBean? = null
                     try {
                         weather = RequestUtils.loadWeather(city)
@@ -59,9 +47,11 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     runOnUiThread {
                         if(weather == null) {
+                            disableAll()
                             binding.tvError.isVisible = true
                             binding.tvError.setText(R.string.errorNotFound)
                         } else {
+                            binding.tvError.isVisible = false
                             val icon = weather.data[0].icon
                             val url = "https://openweathermap.org/img/wn/%s.png"
 
@@ -70,6 +60,16 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
                             binding.tvTemp.text = "${weather.temperature.temp}°"
                             binding.tvDetails.text = "( ${weather.temperature.temp_min}° / ${weather.temperature.temp_max}° )"
                             binding.tvWind.text = "${weather.wind.speed}"
+
+                            enable(binding.tvCity)
+                            enable(binding.tvState)
+                            enable(binding.tvTemp)
+                            enable(binding.tvDetails)
+                            enable(binding.tvWind)
+
+                            binding.ivClear.isVisible = true
+                            binding.ivFire.isVisible = true
+                            binding.ivFlag.isVisible = true
 
                             thread {
                                 val picasso = Picasso.get().load(url.format(icon))
@@ -86,11 +86,24 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun clear() {
+    private fun enable(element: TextView) {
+        element.isVisible = true
+    }
+
+    private fun disableAll() {
         val elementsToClear = arrayListOf(
             binding.progressBar,
             binding.tvError,
-            binding.ivWeather
+            binding.ivWeather,
+            binding.tvError,
+            binding.tvCity,
+            binding.tvTemp,
+            binding.tvDetails,
+            binding.tvWind,
+            binding.tvState,
+            binding.ivClear,
+            binding.ivFire,
+            binding.ivFlag
         )
 
         for (element in elementsToClear) {

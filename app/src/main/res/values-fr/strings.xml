@@ -12,4 +12,9 @@
     <string name="load">Charger</string>
     <string name="loading">---------</string>
     <string name="errorNotFound">[ERREUR] La ville n\'a pas été trouvée</string>
+    <string name="city">Ville</string>
+    <string name="weather_description">Icône qui définit la météo</string>
+    <string name="clear_description">Icône pour nettoyer l\'écran</string>
+    <string name="fire_description">Feu (température)</string>
+    <string name="flag_description">Drapeau (vitesse du vent)</string>
 </resources>

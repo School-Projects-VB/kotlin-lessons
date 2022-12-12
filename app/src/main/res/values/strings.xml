@@ -11,4 +11,9 @@
     <string name="load">Load</string>
     <string name="loading" >---------</string>
     <string name="errorNotFound">[ERROR] City Not Found</string>
+    <string name="city">City</string>
+    <string name="weather_description">Icon that defined weather</string>
+    <string name="clear_description">Icon for clear screen</string>
+    <string name="fire_description">Fire (temperature)</string>
+    <string name="flag_description">Flag (wind)</string>
 </resources>
