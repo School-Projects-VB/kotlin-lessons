@@ -5,13 +5,15 @@ import androidx.lifecycle.ViewModel
 import com.example.kotlintest.exokotlin.RequestUtils
 
 
-class WeatherViewModel(var data: WeatherBean? = null, var errorMessage: String? = null) :
+class WeatherViewModel(var weather: WeatherBean? = null, var errorMessage: String? = null) :
     ViewModel() {
     fun loadData(city: Editable) {
+        weather = null
+        errorMessage = null
         try {
-            this.data = RequestUtils.loadWeather(city)
+            weather = RequestUtils.loadWeather(city)
         } catch (e: java.lang.Exception) {
-            this.errorMessage = e.toString()
+            errorMessage = "[ERROR] ${e.message}"
             e.printStackTrace()
         }
     }

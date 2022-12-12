@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.concurrent.thread
 
+
 class WeatherActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityWeatherBinding.inflate(layoutInflater) }
     private val model by lazy { ViewModelProvider(this)[WeatherViewModel::class.java] }
@@ -27,8 +28,8 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         binding.ivFlag.setColorFilter(Color.BLUE)
 
         disableAll()
-        if (model.data != null) {
-            refreshScreen(model)
+        if (model.weather != null || model.errorMessage != null) {
+            refreshScreen()
         }
     }
 
@@ -41,11 +42,10 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
             binding.btLoad -> {
                 binding.progressBar.isVisible = true
                 thread {
-                    val city = binding.etCity.text
-                    model.loadData(city)
+                    model.loadData(binding.etCity.text)
                     runOnUiThread {
+                        refreshScreen()
                         binding.progressBar.isVisible = false
-                        refreshScreen(model)
                     }
                 }
             }
@@ -53,17 +53,17 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun refreshScreen(wmodel: WeatherViewModel) {
-        if (wmodel.data == null) {
+    private fun refreshScreen() {
+        if (model.errorMessage != null && model.errorMessage!!.isNotBlank()) {
             disableAll()
             binding.tvError.isVisible = true
             binding.tvError.setText(R.string.errorNotFound)
         } else {
-            val weather: WeatherBean = wmodel.data!!
-
             binding.tvError.isVisible = false
-            val icon = weather.data[0].icon
-            val url = "https://openweathermap.org/img/wn/%s.png"
+        }
+
+        if (model.weather != null && !model.weather?.data.isNullOrEmpty()) {
+            val weather: WeatherBean = model.weather!!
 
             binding.tvCity.text = weather.name
             binding.tvState.text = weather.data[0].description.replaceFirstChar {
@@ -84,13 +84,7 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
             binding.ivFire.isVisible = true
             binding.ivFlag.isVisible = true
 
-            thread {
-                val picasso = Picasso.get().load(url.format(icon))
-                runOnUiThread {
-                    binding.ivWeather.isVisible = true
-                    picasso.into(binding.ivWeather)
-                }
-            }
+            Picasso.get().load("https://openweathermap.org/img/wn/%s.png".format(weather.data[0].icon)).into(binding.ivWeather)
         }
     }
 
