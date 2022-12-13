@@ -1,18 +1,20 @@
 package com.example.kotlintest
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlintest.databinding.ActivityWeatherBinding
 import com.squareup.picasso.Picasso
 import java.util.*
-import kotlin.concurrent.thread
-
 
 class WeatherActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityWeatherBinding.inflate(layoutInflater) }
@@ -71,12 +73,11 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
                 binding.etCity.setText("")
             }
             binding.btLoad -> {
-                binding.progressBar.isVisible = true
-                thread {
-                    model.loadData(binding.etCity.text)
-                    runOnUiThread {
-                        binding.progressBar.isVisible = false
-                    }
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                    showWeather()
+                } else {
+                    // TODO: Call onRequestPermissionsResult function (4)
                 }
             }
         }
@@ -104,6 +105,24 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
 
         for (element in elementsToClear) {
             element.isVisible = false
+        }
+    }
+
+    private fun showWeather() {
+        println("show weather")
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            showWeather()
+        } else {
+            Toast.makeText(this, "Need permission location", Toast.LENGTH_SHORT).show()
         }
     }
 }
