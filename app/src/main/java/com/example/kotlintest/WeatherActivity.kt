@@ -87,9 +87,7 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view) {
-            binding.ivClear -> {
-                disableAll()
-            }
+            binding.ivClear -> disableAll()
             binding.btLoad -> {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
