@@ -28,11 +28,12 @@ class WeatherAroundActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when(view) {
             binding.btAdd -> {
-                model.data.add(CoordBean(count++, count++))
+                model.data.add(CoordBean(count, count))
+                count++
                 adapter.submitList(model.data.toList())
             }
             binding.btDelete -> {
-                model.data.removeFirstOrNull()
+                model.data.removeAt(0)
                 adapter.submitList(model.data.toList())
             }
         }
