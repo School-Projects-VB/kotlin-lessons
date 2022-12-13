@@ -10,27 +10,37 @@ class WeatherAroundActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityWeatherAroundBinding.inflate(layoutInflater) }
     private val model by lazy { ViewModelProvider(this)[WeatherAroundViewModel::class.java] }
 
+    private var count = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_weather_around)
+        setContentView(binding.root)
 
         binding.btAdd.setOnClickListener(this)
-        println("oncreate finish")
+        binding.btDelete.setOnClickListener(this)
+    }
+
+    private fun refreshScreen() {
+        var texte = ""
+
+        for(coord in model.data) {
+            texte += "${coord.lon}, ${coord.lat}\n"
+        }
+
+        texte =  model.data.joinToString("\n") { "${it.lon}, ${it.lat}"  }
+
+        binding.tv.text = texte
     }
 
     override fun onClick(view: View) {
-        println("Enter")
-        when (view) {
+        when(view) {
             binding.btAdd -> {
-                model.data.addAll(arrayOf(
-                    CoordBean(2.66, 1.52),
-                    CoordBean(6.44, 6.45),
-                    CoordBean(6.28, 7.25)))
-                println(model.data)
-                val input = "%s %s %s"
-                println(input)
-                val test = input.format(model.data)
-                println(test)
+                model.data.add(CoordBean(count++, count++))
+                refreshScreen()
+            }
+            binding.btDelete -> {
+                model.data.removeFirstOrNull()
+                refreshScreen()
             }
         }
     }
