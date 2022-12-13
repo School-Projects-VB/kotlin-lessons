@@ -7,23 +7,49 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlintest.databinding.ActivityWeatherBinding
 import com.squareup.picasso.Picasso
 import java.util.*
+import kotlin.collections.ArrayList
 
 class WeatherActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityWeatherBinding.inflate(layoutInflater) }
     private val model by lazy { ViewModelProvider(this)[WeatherViewModel::class.java] }
+    private var tvToDisplay = ArrayList<TextView>()
+    private var ivToDisplay = ArrayList<ImageView>()
+    private val elementLists = arrayOf(tvToDisplay, ivToDisplay)
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        this.tvToDisplay.addAll(
+            arrayOf(
+                binding.tvError,
+                binding.tvCity,
+                binding.tvTemp,
+                binding.tvDetails,
+                binding.tvWind,
+                binding.tvState
+            )
+        )
+        this.ivToDisplay.addAll(
+            arrayOf(
+                binding.ivWeather,
+                binding.ivClear,
+                binding.ivFire,
+                binding.ivFlag
+            )
+        )
 
         binding.btLoad.setOnClickListener(this)
         binding.ivClear.setOnClickListener(this)
@@ -33,13 +59,13 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         disableAll()
 
         model.errorMessage.observe(this) {
-            disableAll()
-            binding.tvError.isVisible = true
+            enable(binding.tvError)
             binding.tvError.setText(R.string.errorNotFound)
         }
 
         model.weather.observe(this) { weather ->
-            binding.tvError.isVisible = false
+            enableAll()
+            disable(binding.tvError)
 
             binding.tvCity.text = weather?.name
             binding.tvState.text = weather?.data?.get(0)?.description?.replaceFirstChar {
@@ -50,19 +76,12 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
                 "( ${weather?.temperature?.temp_min}° / ${weather?.temperature?.temp_max}° )"
             binding.tvWind.text = "${weather?.wind?.speed} km/h"
 
-            enable(binding.tvCity)
-            enable(binding.tvState)
-            enable(binding.tvTemp)
-            enable(binding.tvDetails)
-            enable(binding.tvWind)
-
-            binding.ivClear.isVisible = true
-            binding.ivFire.isVisible = true
-            binding.ivFlag.isVisible = true
-            binding.ivWeather.isVisible = true
-
             println("https://openweathermap.org/img/wn/%s.png".format(weather?.data?.get(0)?.icon))
             Picasso.get().load("https://openweathermap.org/img/wn/%s.png".format(weather?.data?.get(0)?.icon)).into(binding.ivWeather)
+        }
+
+        model.runInProgress.observe(this) {
+            binding.progressBar.isVisible = it
         }
     }
 
@@ -70,15 +89,31 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         when (view) {
             binding.ivClear -> {
                 disableAll()
-                binding.etCity.setText("")
             }
             binding.btLoad -> {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                     showWeather()
                 } else {
-                    // TODO: Call onRequestPermissionsResult function (4)
+                    ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
                 }
+            }
+        }
+    }
+
+    private fun disableAll() {
+        this.elementLists.forEach { list ->
+            for (element in list) {
+                element.isVisible = false
+            }
+        }
+    }
+
+    private fun enableAll() {
+        this.elementLists.forEach { list ->
+            for (element in list) {
+                element.isVisible = true
             }
         }
     }
@@ -87,29 +122,8 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         element.isVisible = true
     }
 
-    private fun disableAll() {
-        val elementsToClear = arrayListOf(
-            binding.progressBar,
-            binding.tvError,
-            binding.ivWeather,
-            binding.tvError,
-            binding.tvCity,
-            binding.tvTemp,
-            binding.tvDetails,
-            binding.tvWind,
-            binding.tvState,
-            binding.ivClear,
-            binding.ivFire,
-            binding.ivFlag
-        )
-
-        for (element in elementsToClear) {
-            element.isVisible = false
-        }
-    }
-
-    private fun showWeather() {
-        println("show weather")
+    private fun disable(element: TextView) {
+        element.isVisible = false
     }
 
     override fun onRequestPermissionsResult(
@@ -124,5 +138,9 @@ class WeatherActivity : AppCompatActivity(), View.OnClickListener {
         } else {
             Toast.makeText(this, "Need permission location", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showWeather() {
+        model.loadData(LocationUtils.getLastKnownLocation(this))
     }
 }

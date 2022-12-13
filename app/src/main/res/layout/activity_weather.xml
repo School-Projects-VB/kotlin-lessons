@@ -114,15 +114,6 @@
         android:textColor="@android:color/holo_red_dark"
         android:textStyle="italic" />
 
-    <EditText
-        android:id="@+id/etCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/city"
-        android:autofillHints="@string/city" />
-
     <Button
         android:id="@+id/btLoad"
         android:layout_width="wrap_content"
