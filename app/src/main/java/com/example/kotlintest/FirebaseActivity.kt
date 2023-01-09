@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 class FirebaseActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityFirebaseBinding.inflate(layoutInflater) }
+    private val adapter = GameFirebaseAdapter(MatchFirebaseRepo.select(this))
 
     private val signInLauncher = registerForActivityResult(FirebaseAuthUIActivityResultContract()) {
         it.idpResponse?.error?.printStackTrace()
@@ -62,6 +63,7 @@ class FirebaseActivity : AppCompatActivity() {
         binding.fab.isVisible = user != null
 
         if (user != null) {
+            binding.rv.adapter = adapter
             binding.tvConnexion.isVisible = false
             binding.tvDeconnexion.isVisible = true
         } else {

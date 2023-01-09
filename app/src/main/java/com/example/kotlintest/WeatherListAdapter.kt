@@ -1,6 +1,5 @@
 package com.example.kotlintest
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -22,7 +21,6 @@ class WeatherListAdapter :ListAdapter<CoordBean, WeatherListAdapter.ViewHolder>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(RowWeatherBinding.inflate(LayoutInflater.from(parent.context)))
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val current = getItem(position)
         holder.binding.tvCity.text = "${current.lat}, ${current.lon} "
