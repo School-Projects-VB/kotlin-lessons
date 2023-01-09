@@ -1,2 +1,2 @@
-# kotlin-test
-Kotlin
+# kotlin-lessons
+📱 Basic Android App
