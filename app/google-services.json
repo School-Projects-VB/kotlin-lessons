@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "673569927156",
+    "project_id": "kotlin-test-ff322",
+    "storage_bucket": "kotlin-test-ff322.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673569927156:android:f8c530212555e3bb0e53a1",
+        "android_client_info": {
+          "package_name": "com.example.kotlintest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673569927156-nknv5nlfku9q0vcv427n1egdvd1e3f14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyEa2SxDczxVlMkiOCMIJzWeEsvbH_rEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673569927156-nknv5nlfku9q0vcv427n1egdvd1e3f14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
