@@ -22,6 +22,7 @@ private const val MENU_ID_DATE_PICKER = 2
 private const val MENU_ID_ALERT_DIALOG = 3
 private const val MENU_ID_METEO = 4
 private const val MENU_ID_AROUND_METEO = 5
+private const val MENU_ID_FIREBASE = 6
 
 @SuppressLint("SimpleDateFormat")
 val SDF = SimpleDateFormat("dd/MM/yy HH:mm")
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TimePickerDialog
         menu.add(0, MENU_ID_ALERT_DIALOG, 0, "AlertDialog")
         menu.add(0, MENU_ID_METEO, 0, "Météo")
         menu.add(0, MENU_ID_AROUND_METEO, 0, "Météo autour de moi")
+        menu.add(0, MENU_ID_FIREBASE, 0, "Firebase")
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -66,6 +68,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TimePickerDialog
             MENU_ID_ALERT_DIALOG -> AlertDialog.Builder(this).setTitle("Mon titre").setMessage("Afficher un toast").setPositiveButton("OK") {dialog, which -> Toast.makeText(this, "Ceci est un toast", Toast.LENGTH_SHORT).show()}.setIcon(R.mipmap.ic_launcher).show()
             MENU_ID_METEO -> startActivity(Intent(this, WeatherActivity::class.java))
             MENU_ID_AROUND_METEO -> startActivity(Intent(this, WeatherAroundActivity::class.java))
+            MENU_ID_FIREBASE -> startActivity(Intent(this, FirebaseActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }

@@ -9,7 +9,7 @@
     <string name="ajouter">Add</string>
     <string name="tv">TextView</string>
     <string name="load">Load</string>
-    <string name="loading" >---------</string>
+    <string name="loading">---------</string>
     <string name="errorNotFound">[ERROR] City Not Found</string>
     <string name="city">City</string>
     <string name="weather_description">Icon that defined weather</string>
