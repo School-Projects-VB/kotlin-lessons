@@ -1,5 +1,6 @@
 package com.example.kotlintest
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
@@ -42,6 +43,10 @@ class FirebaseActivity : AppCompatActivity() {
             AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener { refreshScreen() }
+        }
+
+        binding.fab.setOnClickListener {
+            startActivity(Intent(this, CreateGameActivity::class.java))
         }
     }
 

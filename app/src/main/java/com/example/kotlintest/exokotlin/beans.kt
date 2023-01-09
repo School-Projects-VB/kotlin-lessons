@@ -112,3 +112,13 @@ class RandomName {
     
     fun next() :String{return names[random.nextInt(names.size)]}
 }
+
+data class MatchBean(
+    var id: String? = null,
+    var nameTeam1: String? = null,
+    var nameTeam2: String? = null,
+    var idUserCreator: String? = null,
+    var scoreTeam1: Int = 0,
+    var scoreTeam2: Int = 0,
+    var time: Long = 0
+)
